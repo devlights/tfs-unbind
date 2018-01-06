@@ -17,6 +17,7 @@ $ source activate tfsunbind
 
 ```sh
 $ cd PROJECT_ROOT
+$ source activate tfsunbind
 $ py.test
 ```
 
