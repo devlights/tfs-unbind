@@ -3,9 +3,6 @@ channels:
 - defaults
 - conda-forge
 dependencies:
-- autopep8=1.3.3=py_0
-- ipython=6.2.1=py36h3dda519_1
-- pylint=1.7.4=py36hdee9077_0
-- pytest=3.3.0=py36h707cbdc_0
-- python=3.6.4=hc167b69_0
+- pytest
+- python
 
