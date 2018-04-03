@@ -51,7 +51,7 @@ def unbind(orig_dir: str, dest_dir: str) -> None:
         _update_sln(sln_files)
 
         # csprojファイルからTFSのバインディングを除去
-        _update_csproj(csproj_files)
+        _update_proj(csproj_files)
 
     logging.warning('完了')
 
@@ -96,7 +96,7 @@ def _collect(directory: str) -> Tuple[List[str], List[str], List[str], List[str]
     del_dirs = []
     del_files = []
     sln_files = []
-    csproj_files = []
+    proj_files = []
 
     for dirpath, dirnames, filenames in os.walk(directory):
         if dirpath.endswith(unnecessary_dir_types):
@@ -109,10 +109,10 @@ def _collect(directory: str) -> Tuple[List[str], List[str], List[str], List[str]
                 if fname.endswith('.sln'):
                     sln_files.append(os.path.join(dirpath, fname))
 
-                if fname.endswith('csproj'):
-                    csproj_files.append(os.path.join(dirpath, fname))
+                if fname.endswith('proj'):
+                    proj_files.append(os.path.join(dirpath, fname))
 
-    return del_dirs, del_files, sln_files, csproj_files
+    return del_dirs, del_files, sln_files, proj_files
 
 
 def _delete(del_dirs: List[str], del_files: List[str]) -> None:
@@ -166,26 +166,26 @@ def _update_sln(sln_files: List[str]) -> None:
         shutil.move(sln_file_new, sln_file)
 
 
-def _update_csproj(csproj_files: List[str]) -> None:
+def _update_proj(proj_files: List[str]) -> None:
     """
-    csprojファイルを更新し、TFSとのバインディング部分を除去します。
+    projファイルを更新し、TFSとのバインディング部分を除去します。
 
-    :param csproj_files: csprojファイルリスト
+    :param proj_files: projファイルリスト
     :return: なし
     """
-    logging.info('csprojファイルを更新します・・・・')
-    for csproj_file in csproj_files:
-        csproj_file_new = f'{csproj_file}.new'
+    logging.info('**projファイルを更新します・・・・')
+    for proj_file in proj_files:
+        proj_file_new = f'{proj_file}.new'
 
-        with open_inout(csproj_file, csproj_file_new) as (in_fp, out_fp):
+        with open_inout(proj_file, proj_file_new) as (in_fp, out_fp):
             for line in in_fp:
                 stripped = line.strip()
 
                 if not stripped.startswith('<Scc'):
                     out_fp.write(line)
 
-        shutil.copystat(csproj_file, csproj_file_new)
-        shutil.move(csproj_file_new, csproj_file)
+        shutil.copystat(proj_file, proj_file_new)
+        shutil.move(proj_file_new, proj_file)
 
 
 if __name__ == '__main__':
