@@ -89,3 +89,9 @@ ENV/
 
 # PyCharm
 .idea/
+
+# pytest
+.pytest_cache/
+
+# vscode
+.vscode/
