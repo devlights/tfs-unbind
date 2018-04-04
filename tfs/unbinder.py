@@ -42,7 +42,7 @@ def unbind(orig_dir: str, dest_dir: str) -> None:
         _make_writeable(current_dir)
 
         # 処理対象となるディレクトリとファイルを収集
-        del_dirs, del_files, sln_files, csproj_files = _collect(current_dir)
+        del_dirs, del_files, sln_files, proj_files = _collect(current_dir)
 
         # 不要なディレクトリとファイルを削除
         _delete(del_dirs, del_files)
@@ -50,8 +50,8 @@ def unbind(orig_dir: str, dest_dir: str) -> None:
         # ソリューションファイルからTFSのバインディングを除去
         _update_sln(sln_files)
 
-        # csprojファイルからTFSのバインディングを除去
-        _update_proj(csproj_files)
+        # projファイルからTFSのバインディングを除去
+        _update_proj(proj_files)
 
     logging.warning('完了')
 
