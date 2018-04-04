@@ -50,8 +50,8 @@ def test_timetracer():
 
 def test_open_inout():
     # arrange
-    in_file = '/tmp/test_open_input.txt'
-    out_file = '/tmp/test_open_input2.txt'
+    in_file = './test_open_input.txt'
+    out_file = './test_open_input2.txt'
 
     with open(in_file, 'w', encoding='utf-8') as fp:
         fp.writelines(str(x) for x in range(10))
